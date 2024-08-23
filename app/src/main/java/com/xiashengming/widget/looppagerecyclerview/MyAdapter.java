@@ -2,6 +2,7 @@ package com.xiashengming.widget.looppagerecyclerview;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class MyAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).btn.setText(data.get(position));
+
+        Log.d("yeTest", "onBindViewHolder: "+position);
     }
 
     @Override
@@ -43,9 +46,9 @@ public class MyAdapter extends RecyclerView.Adapter {
     }
 
     private void initData(){
-        String[] str = new String[]{"AAAAAAA","BBBBBBBBB","CCCCCCCCCC"};
-        for (int i = 0; i < 9; i++) {
-            data.add(i, str[i % 3]);
+        String[] str = new String[]{"抽奖1","抽奖2","抽奖3","抽奖4","抽奖5","抽奖6"};
+        for (int i = 0; i < 6; i++) {
+            data.add(i, str[i % 6]);
 
         }
     }
