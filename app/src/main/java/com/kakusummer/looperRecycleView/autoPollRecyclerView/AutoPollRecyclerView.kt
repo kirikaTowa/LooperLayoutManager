@@ -5,14 +5,36 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
+import com.kakusummer.LooperRecycleView.R
 import java.lang.ref.WeakReference
 
-
+//https://www.jianshu.com/p/16fe31f7058e
 class AutoPollRecyclerView(context: Context?, @Nullable attrs: AttributeSet?) :
     RecyclerView(context!!, attrs) {
     var autoPollTask: AutoPollTask = AutoPollTask(this)
     private var running = false //表示是否正在自动轮询
     private var canRun = false //表示是否可以自动轮询
+
+    init {
+        if (context != null) {
+            if (attrs != null) {
+                init(context, attrs)
+            }
+        }
+    }
+
+    private fun init(context: Context, attrs: AttributeSet) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AutoPollRecyclerView)
+
+        scrollX =
+            typedArray.getInt(R.styleable.AutoPollRecyclerView_scrollX, 2)
+        scrollY =
+            typedArray.getInt(R.styleable.AutoPollRecyclerView_scrollY, 2)
+
+
+        typedArray.recycle()
+    }
+
 
     class AutoPollTask(reference: AutoPollRecyclerView) : Runnable {
         private val mReference = WeakReference(reference)
@@ -20,7 +42,7 @@ class AutoPollRecyclerView(context: Context?, @Nullable attrs: AttributeSet?) :
         override fun run() {
             val recyclerView = mReference.get()
             if (recyclerView != null && recyclerView.running && recyclerView.canRun) {
-                recyclerView.scrollBy(2, 2)
+                recyclerView.scrollBy(scrollX, scrollY)
                 recyclerView.postDelayed(recyclerView.autoPollTask, TIME_AUTO_POLL)
             }
         }
@@ -49,5 +71,8 @@ class AutoPollRecyclerView(context: Context?, @Nullable attrs: AttributeSet?) :
 
     companion object {
         private const val TIME_AUTO_POLL: Long = 16
+        private var scrollX = 2
+        private var scrollY = 2
     }
+
 }

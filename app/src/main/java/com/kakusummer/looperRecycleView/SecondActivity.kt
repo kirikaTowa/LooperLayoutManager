@@ -14,7 +14,6 @@ import com.kakusummer.looperRecycleView.autoPollRecyclerView.AutoPollRecyclerVie
 
 class SecondActivity : AppCompatActivity() {
 
-
     private var mRecyclerView: AutoPollRecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
